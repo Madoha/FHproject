@@ -1,7 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import hero from "./hero.png";
-import "./Hero.css";
+import React from 'react'
+import hero from "./hero.png"
+import { Link } from 'react-router-dom'
 
 interface Props {}
 
@@ -31,7 +30,7 @@ const Hero = (props: Props) => {
         </div>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default Hero;
+export default Hero

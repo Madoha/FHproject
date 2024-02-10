@@ -1,8 +1,8 @@
-import { SyntheticEvent } from "react";
+import React, { SyntheticEvent } from 'react'
 
 interface Props {
-  onPortfolioCreate: (e: SyntheticEvent) => void;
-  symbol: string;
+    onPortfolioCreate: (e: SyntheticEvent) => void;
+    symbol: string;
 }
 
 const AddPortfolio = ({ onPortfolioCreate, symbol }: Props) => {
@@ -18,7 +18,7 @@ const AddPortfolio = ({ onPortfolioCreate, symbol }: Props) => {
         </button>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default AddPortfolio;
+export default AddPortfolio

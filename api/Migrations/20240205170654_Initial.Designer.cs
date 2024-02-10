@@ -12,8 +12,8 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240115080856_SeedRoles")]
-    partial class SeedRoles
+    [Migration("20240205170654_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -120,6 +120,21 @@ namespace api.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("api.Models.Portfolio", b =>
+                {
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("text");
+
+                    b.Property<int>("StockId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("AppUserId", "StockId");
+
+                    b.HasIndex("StockId");
+
+                    b.ToTable("Portfolios");
+                });
+
             modelBuilder.Entity("api.Models.Stock", b =>
                 {
                     b.Property<int>("Id")
@@ -182,15 +197,15 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ca4d1e77-9fdc-49de-896b-87dc1b349b8a",
-                            ConcurrencyStamp = "5b268d38-4007-4b26-bda9-d8b1b453a346",
+                            Id = "9b55a6fc-13fd-4195-b0e9-ee7fabf28da0",
+                            ConcurrencyStamp = "d2001e8a-46ed-411b-bae5-118ad6e2d4ff",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "5c14a25e-a017-4bdf-ba2b-f44b9ab7490a",
-                            ConcurrencyStamp = "49fec42f-447a-41d6-bf32-718495cf7b7b",
+                            Id = "d210ffa6-2c1a-4704-a976-6136c6804ce4",
+                            ConcurrencyStamp = "189617c9-85d1-4fc2-a8f3-0965754c9afa",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -311,6 +326,25 @@ namespace api.Migrations
                     b.Navigation("Stock");
                 });
 
+            modelBuilder.Entity("api.Models.Portfolio", b =>
+                {
+                    b.HasOne("api.Models.AppUser", "AppUser")
+                        .WithMany("Portfolios")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("api.Models.Stock", "Stock")
+                        .WithMany("Portfolios")
+                        .HasForeignKey("StockId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Stock");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -362,9 +396,16 @@ namespace api.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("api.Models.AppUser", b =>
+                {
+                    b.Navigation("Portfolios");
+                });
+
             modelBuilder.Entity("api.Models.Stock", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("Portfolios");
                 });
 #pragma warning restore 612, 618
         }
